@@ -1,0 +1,96 @@
+﻿@model ICollection<TransactionIndexViewModel>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">DataTable with minimal features & hover style</h3>
+              </div>
+              @if(Model.Count == 0)
+              {
+                  <h1 class="text-center"><span class="text-danger">You first need to import transactions</span></h1>
+              }
+              else
+              {
+                  @foreach (TransactionIndexViewModel transaction in Model)
+                  {
+                      <!-- /.card-header -->
+                      <div class="card-body">
+                          <table id="example2" class="table table-bordered table-hover">
+                              <thead>
+                                  <tr>
+                                      <th>Financial Institution</th>
+                                      <th>FX Settlement Date</th>
+                                      <th>Reconciliation File ID</th>
+                                      <th>Transaction Currency</th>
+                                      <th>Reconciliation Currency</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td>@transaction.FinancialInstitution?.InstitutionName</td>
+                                      <td>@transaction.FXSettlementDate.ToString("MM.dd.yyyy")</td>
+                                      <td>@transaction.ReconciliationFileID</td>        
+                                      <td>@transaction.TransactionCurrency</td>        
+                                      <td>@transaction.ReconciliationCurrency</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="card-body">
+                          <table id="example2" class="table table-bordered table-hover">
+                              <thead>
+                                  <tr>
+                                      <th>Settlement Category</th>
+                                      <th>Transaction Amount Credit</th>
+                                      <th>Reconciliation Amnt Credit</th>
+                                      <th>Fee Amount Credit</th>
+                                      <th>Transaction Amount Debit</th>
+                                      <th>Reconciliation Amnt Debit</th>
+                                      <th>Fee Amount Debit</th>
+                                      <th>Count Total</th>
+                                      <th>Net Value</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach (SettlementDetailViewModel settlementDetail in transaction.SettlementDetails)
+                                  {
+                                      <tr>
+                                          <td>@settlementDetail.SettlementCategory?.CategoryName</td>
+                                          <td>@settlementDetail.TransactionAmountCredit</td>
+                                          <td>@settlementDetail.ReconciliationAmntCredit</td>
+                                          <td>@settlementDetail.FeeAmountCredit</td>
+                                          <td>@settlementDetail.TransactionAmountDebit</td>
+                                          <td>@settlementDetail.ReconciliationAmntDebit</td>
+                                          <td>@settlementDetail.FeeAmountDebit</td>
+                                          <td>@settlementDetail.CountTotal</td>
+                                          <td>@settlementDetail.NetValue</td>
+                                      </tr>
+                                   }
+                                   <tr>
+                                       <td>Totals</td>
+                                       <td>@transaction.TransactionAmountCreditTotal</td>
+                                       <td>@transaction.ReconciliationAmntCreditTotal</td>
+                                       <td>@transaction.FeeAmountCreditTotal</td>
+                                       <td>@transaction.TransactionAmountDebitTotal</td>
+                                       <td>@transaction.ReconciliationAmntDebitTotal</td>
+                                       <td>@transaction.FeeAmountDebitTotal</td>
+                                       <td>@transaction.CountGrossTotal</td>
+                                       <td>@transaction.NetValueTotal</td>
+                                   </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <hr class="bg-dark"/>
+                  }
+              }
+              </div>
+          </div>
+          <!-- /.col -->
+      </div>
+      <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
